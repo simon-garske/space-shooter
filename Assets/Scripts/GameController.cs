@@ -4,11 +4,14 @@ using System.Collections;
 public class GameController : MonoBehaviour
 {
 	public GameObject hazard;
+	public GameObject boss;
 	public Vector3 spawnValues;
 	public int hazardCount;
 	public float spawnWait;
 	public float startWait;
 	public float waveWait;
+	public Vector3 bossSpawnValues;
+	public Quaternion bossSpawnRotation;
 
 	public GUIText scoreText;
 	public GUIText restartText;
@@ -18,6 +21,7 @@ public class GameController : MonoBehaviour
 	private bool restart;
 	private int score;
 	private int waveCounter;
+	private int untilBoss;
 
 	void Start ()
 	{
@@ -28,6 +32,7 @@ public class GameController : MonoBehaviour
 		score = 0;
 		UpdateScore ();
 		StartCoroutine (SpawnWaves());
+		untilBoss = 0;
 	}
 
 	void Update ()
@@ -46,6 +51,14 @@ public class GameController : MonoBehaviour
 		yield return new WaitForSeconds (startWait);
 		while (true)
 		{
+			if (waveCounter == 20) 
+			{
+				Vector3 bossSpawnPosition = new Vector3 (bossSpawnValues.x, bossSpawnValues.y, bossSpawnValues.z);
+				Quaternion bossSpawnRotation = (bossS;
+				Instantiate (boss, bossSpawnPosition, bossSpawnRotation);
+				waveCounter++;
+			}
+
 			for (int i = 0; i < hazardCount; i++) 
 			{
 				Vector3 spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
@@ -53,14 +66,12 @@ public class GameController : MonoBehaviour
 				Instantiate (hazard, spawnPosition, spawnRotation);
 				yield return new WaitForSeconds (spawnWait);
 				waveCounter++;
+
 			}
 			yield return new WaitForSeconds (waveWait);
 
-			if (waveCounter == 10) 
-			{
-				Vector3 bossPosition = new Vector3 (0.5,0.8,0)
-					Instantiate (
-			}
+
+		
 
 			if (gameOver) 
 			{
@@ -69,7 +80,7 @@ public class GameController : MonoBehaviour
 				break;
 			}
 		}
-	}
+}
 
 	public void AddScore (int newScoreValue)
 	{
