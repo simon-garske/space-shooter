@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour
 			if (waveCounter == 20) 
 			{
 				Vector3 bossSpawnPosition = new Vector3 (bossSpawnValues.x, bossSpawnValues.y, bossSpawnValues.z);
-				Quaternion bossSpawnRotation = (bossS;
+				Quaternion bossSpawnRotation = new Quaternion(0,180,0,0);
 				Instantiate (boss, bossSpawnPosition, bossSpawnRotation);
 				waveCounter++;
 			}
