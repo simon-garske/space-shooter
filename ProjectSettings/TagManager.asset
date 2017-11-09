@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Boundary
+  - Boss
+  - BossBoundary
+  - BossShot
+  - Asteroid
   layers:
   - Default
   - TransparentFX

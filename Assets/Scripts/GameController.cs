@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
 	public GameObject boss;
 	public Vector3 spawnValues;
 	public int hazardCount;
+	public int shield;
 	public float spawnWait;
 	public float startWait;
 	public float waveWait;
@@ -16,12 +17,12 @@ public class GameController : MonoBehaviour
 	public GUIText scoreText;
 	public GUIText restartText;
 	public GUIText gameOverText;
+	public GUIText shieldText;
 
 	private bool gameOver;
 	private bool restart;
 	private int score;
 	private int waveCounter;
-	private int untilBoss;
 
 	void Start ()
 	{
@@ -29,10 +30,10 @@ public class GameController : MonoBehaviour
 		restart = false;
 		restartText.text = "";
 		gameOverText.text = "";	
+		shieldText.text = "";
 		score = 0;
 		UpdateScore ();
 		StartCoroutine (SpawnWaves());
-		untilBoss = 0;
 	}
 
 	void Update ()
@@ -44,6 +45,7 @@ public class GameController : MonoBehaviour
 				Application.LoadLevel (Application.loadedLevel);
 			}
 		}
+
 	}
 
 	IEnumerator SpawnWaves()
@@ -51,23 +53,25 @@ public class GameController : MonoBehaviour
 		yield return new WaitForSeconds (startWait);
 		while (true)
 		{
-			if (waveCounter == 20) 
+			if (waveCounter == 10) 
 			{
 				Vector3 bossSpawnPosition = new Vector3 (bossSpawnValues.x, bossSpawnValues.y, bossSpawnValues.z);
 				Quaternion bossSpawnRotation = new Quaternion(0,180,0,0);
 				Instantiate (boss, bossSpawnPosition, bossSpawnRotation);
 				waveCounter++;
 			}
+            if (waveCounter != 10)
+            {
+                for (int i = 0; i < hazardCount; i++)
+                {
+                    Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
+                    Quaternion spawnRotation = Quaternion.identity;
+                    Instantiate(hazard, spawnPosition, spawnRotation);
+                    yield return new WaitForSeconds(spawnWait);
+                    waveCounter++;
 
-			for (int i = 0; i < hazardCount; i++) 
-			{
-				Vector3 spawnPosition = new Vector3 (Random.Range (-spawnValues.x, spawnValues.x), spawnValues.y, spawnValues.z);
-				Quaternion spawnRotation = Quaternion.identity;
-				Instantiate (hazard, spawnPosition, spawnRotation);
-				yield return new WaitForSeconds (spawnWait);
-				waveCounter++;
-
-			}
+                }
+            }
 			yield return new WaitForSeconds (waveWait);
 
 
@@ -97,5 +101,18 @@ public class GameController : MonoBehaviour
 	{
 		gameOverText.text = "Game Over!";
 		gameOver = true;
+	}
+
+	void OnTriggerEnter (Collider other)
+	{
+		if (other.tag == "Asteroid" || other.tag == "BossShot") 
+		{
+			if (shield == 0) 
+			{
+				GameOver();
+			}
+			shield--;
+
+		}
 	}
 }
