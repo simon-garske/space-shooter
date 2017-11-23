@@ -6,21 +6,28 @@ public class BossBehaviour : MonoBehaviour
 {
     public Boundary boundary;
     public int speed;
-    public int direction;
+    public int bossLife;
 
 	// Use this for initialization
 	void Start ()
     {
-        direction = 1;
+        bossLife = 30;
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
-            GetComponent<Rigidbody>().velocity = transform.right * speed;
+        GetComponent<Rigidbody>().velocity = transform.right * speed;
+
+        if (bossLife == 0)
+        {
+            Destroy(gameObject);
+        }
     }
-    private void OnTriggerExit(Collider other )
+
+     void OnTriggerEnter(Collider other)
     {
         speed *= -1;
     }
+ 
 }

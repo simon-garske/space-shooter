@@ -19,18 +19,22 @@ public class GameController : MonoBehaviour
 
 	private bool gameOver;
 	private bool restart;
-	private int score;
+    public bool bossFight;
+    private int score;
 	private int waveCounter;
+
 
 	void Start ()
 	{
 		gameOver = false;
 		restart = false;
+        bossFight = false;
 		restartText.text = "";
 		gameOverText.text = "";	
 		score = 0;
 		UpdateScore ();
 		StartCoroutine (SpawnWaves());
+
 	}
 
 	void Update ()
@@ -49,14 +53,14 @@ public class GameController : MonoBehaviour
 		yield return new WaitForSeconds (startWait);
 		while (true)
 		{
-			if (waveCounter == 10) 
+			if (bossFight == false && waveCounter == 10 ) 
 			{
 				Vector3 bossSpawnPosition = new Vector3 (bossSpawnValues.x, bossSpawnValues.y, bossSpawnValues.z);
 				//Quaternion bossSpawnRotation = new Quaternion (bossSpawnRotation.x, bossSpawnRotation.y, bossSpawnRotation.z, bossSpawnRotation.w);
 				Instantiate (boss, bossSpawnPosition, bossSpawnRotation);
-				waveCounter++;
+                bossFight = true;
 			}
-            if (waveCounter != 10)
+            if (waveCounter != 10 && bossFight == false)
             {
                 for (int i = 0; i < hazardCount; i++)
                 {
@@ -67,8 +71,8 @@ public class GameController : MonoBehaviour
                     waveCounter++;
 
                 }
-            }
-			yield return new WaitForSeconds (waveWait);
+             }
+            yield return new WaitForSeconds (waveWait);
 
 
 		

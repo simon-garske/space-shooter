@@ -1073,6 +1073,7 @@ MonoBehaviour:
   scoreText: {fileID: 2041724570}
   restartText: {fileID: 387552807}
   gameOverText: {fileID: 288183117}
+  bossFight: 0
 --- !u!4 &2130045479
 Transform:
   m_ObjectHideFlags: 0
