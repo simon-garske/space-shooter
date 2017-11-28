@@ -9,5 +9,9 @@ public class DestroyByBoundary : MonoBehaviour
         {
             Destroy(other.gameObject);
         }
+		if (other.tag != "Boss" && other.tag != "BossBoundary") 
+		{
+			Destroy (other.gameObject);
+		}
 	}
 }

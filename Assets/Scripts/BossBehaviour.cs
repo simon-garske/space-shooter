@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class BossBehaviour : MonoBehaviour
 {
+	public GameObject shot;
     public Boundary boundary;
+	public Transform bossShotSpawn;
     public int speed;
     public int bossLife;
+    public int direction;
+	private float Schuss;
 
 	// Use this for initialization
 	void Start ()
@@ -23,11 +27,20 @@ public class BossBehaviour : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
 
-     void OnTriggerEnter(Collider other)
-    {
-        speed *= -1;
+        Schuss = Random.value;
+
+        if (Schuss < 0.01)
+        {
+            Instantiate(shot, bossShotSpawn.position, bossShotSpawn.rotation);
+        }
     }
- 
+    
+    private void OnTriggerExit(Collider other )
+	{
+		if (other.tag == "BossBoundary") 
+		{
+			speed *= -1;
+		}
+	}
 }
