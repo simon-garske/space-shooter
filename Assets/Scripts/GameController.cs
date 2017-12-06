@@ -23,7 +23,7 @@ public class GameController : MonoBehaviour
 	private bool restart;
     public bool bossFight;
     private int score;
-	private int waveCounter;
+	public int waveCounter;
 
 
 	void Start ()
@@ -33,7 +33,6 @@ public class GameController : MonoBehaviour
         bossFight = false;
 		restartText.text = "";
 		gameOverText.text = "";	
-		shieldText.text = "";
 		score = 0;
         waveCounter = 0;
 		UpdateScore ();
@@ -58,7 +57,7 @@ public class GameController : MonoBehaviour
 		yield return new WaitForSeconds (startWait);
 		while (true)
 		{
-			if (bossFight == false && waveCounter == 0 ) 
+			if (bossFight == false && waveCounter ==  0 ) 
 			{
 				Vector3 bossSpawnPosition = new Vector3 (bossSpawnValues.x, bossSpawnValues.y, bossSpawnValues.z);
 				Quaternion bossSpawnRotation = new Quaternion(0,180,0,0);

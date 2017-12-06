@@ -6,30 +6,37 @@ public class PlayerCollision : MonoBehaviour
 {
 
     public int shield;
-
+    public GameController gameController;
+    public GUIText shieldText;
     public bool gameOver;
 
 
 	void Start ()
     {
-		
-	}
-	
-	void Update ()
+        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
+        if(gameController != null)
+        {
+            gameController = gameControllerObject.GetComponent<GameController>();
+        }
+
+    }
+
+    void Update ()
     {
-		
+		shieldText.text = "";
 	}
 
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "BossShot")
         {
-            if (shield == 0)
-            {
-                GameController.gameOver();
-            }
             shield--;
 
+            if (shield == 0)
+            {
+                gameController.GameOver();
+                Destroy(gameObject);
+            }
         }
     }
 }

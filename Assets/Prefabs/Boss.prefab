@@ -163,5 +163,7 @@ MonoBehaviour:
     zMax: 0
   bossShotSpawn: {fileID: 4397076866396774}
   speed: 5
-  bossLife: 0
+  bossLife: 30
   direction: 0
+  BossLifeText: {fileID: 132885093472955054, guid: bcedfe7e8f5763248a468b7e063b41b1,
+    type: 2}
