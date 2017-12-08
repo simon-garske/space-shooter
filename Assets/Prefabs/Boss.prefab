@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shot: {fileID: 1687644742412734, guid: 9dc23ee02fcf490418f92af89de966cf, type: 2}
+  explosion: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f, type: 2}
   boundary:
     xMin: 0
     xMax: 0

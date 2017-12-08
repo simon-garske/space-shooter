@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
 	private bool restart;
     public bool bossFight;
     private int score;
+    public int shieldScore;
 	public int waveCounter;
 
 
@@ -49,7 +50,6 @@ public class GameController : MonoBehaviour
 				Application.LoadLevel (Application.loadedLevel);
 			}
 		}
-
 	}
 
 	IEnumerator SpawnWaves()
@@ -57,14 +57,17 @@ public class GameController : MonoBehaviour
 		yield return new WaitForSeconds (startWait);
 		while (true)
 		{
-			if (bossFight == false && waveCounter ==  0 ) 
-			{
-				Vector3 bossSpawnPosition = new Vector3 (bossSpawnValues.x, bossSpawnValues.y, bossSpawnValues.z);
-				Quaternion bossSpawnRotation = new Quaternion(0,180,0,0);
-				Instantiate (boss, bossSpawnPosition, bossSpawnRotation);
-                bossFight = true;
-			}
-            if (waveCounter != 10 && bossFight == false)
+            if (bossFight == false)
+                if (waveCounter == 10 || waveCounter == 21 || waveCounter == 32 || waveCounter == 43)
+                {
+                    {
+                        Vector3 bossSpawnPosition = new Vector3(bossSpawnValues.x, bossSpawnValues.y, bossSpawnValues.z);
+                        Quaternion bossSpawnRotation = new Quaternion(0, 180, 0, 0);
+                        Instantiate(boss, bossSpawnPosition, bossSpawnRotation);
+                        bossFight = true;
+                    }
+                }
+            if (bossFight == false)
             {
                 for (int i = 0; i < hazardCount; i++)
                 {
@@ -93,6 +96,7 @@ public class GameController : MonoBehaviour
 	public void AddScore (int newScoreValue)
 	{
 		score += newScoreValue;
+        shieldScore += newScoreValue;
 		UpdateScore ();
 	}
 

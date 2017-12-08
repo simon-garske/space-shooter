@@ -5,6 +5,7 @@ using UnityEngine;
 public class BossBehaviour : MonoBehaviour
 {
 	public GameObject shot;
+    public GameObject explosion;
     private GameController gameController;
     public Boundary boundary;
 	public Transform bossShotSpawn;
@@ -19,9 +20,19 @@ public class BossBehaviour : MonoBehaviour
     void Start ()
     {
         GameObject gameControllerObject = GameObject.FindWithTag("GameController");
-        if (gameController != null)
+        if (gameControllerObject != null)
         {
             gameController = gameControllerObject.GetComponent<GameController>();
+        }
+        if (gameController == null)
+        {
+            Debug.Log("Cannot find 'GameController' script");
+        }
+
+        GameObject BossLife = GameObject.FindWithTag("BossLife");
+        if (BossLife != null)
+        {
+            BossLifeText = BossLife.GetComponent<GUIText>();
         }
         bossLife = 30;
 	}
@@ -41,11 +52,24 @@ public class BossBehaviour : MonoBehaviour
 
         Schuss = Random.value;
 
-        if (Schuss < 0.03)
+        if (Schuss < 0.06)
         {
             Instantiate(shot, bossShotSpawn.position, bossShotSpawn.rotation);
         }
-        BossLifeText.text = "HP:" + bossLife ;
+        if (Schuss < 0.008)
+        {
+            for (int i =0; i<9; i++)
+            {
+                Instantiate(shot, bossShotSpawn.position, bossShotSpawn.rotation);
+            }
+        }
+        BossLifeUpdate();
+        if (gameController.bossFight == false)
+        {
+            BossLifeText.text = "";
+        }
+
+
     }
     
     private void OnTriggerExit(Collider other )
@@ -61,6 +85,12 @@ public class BossBehaviour : MonoBehaviour
         if (other.tag == "Shot")
         {
             bossLife--;
+            Instantiate(explosion, transform.position, transform.rotation);
         }
+    }
+
+    private void BossLifeUpdate()
+    {
+        BossLifeText.text = "HP:" + bossLife;
     }
 }

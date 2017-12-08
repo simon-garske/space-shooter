@@ -6,6 +6,7 @@ public class PlayerCollision : MonoBehaviour
 {
 
     public int shield;
+    private int shieldRegeneration;
     public GameController gameController;
     public GUIText shieldText;
     public bool gameOver;
@@ -18,12 +19,12 @@ public class PlayerCollision : MonoBehaviour
         {
             gameController = gameControllerObject.GetComponent<GameController>();
         }
-
+        shieldRegeneration = 100;
     }
 
     void Update ()
     {
-		shieldText.text = "";
+        UpdateShield();
 	}
 
     void OnTriggerEnter(Collider other)
@@ -39,4 +40,16 @@ public class PlayerCollision : MonoBehaviour
             }
         }
     }
+
+    private void UpdateShield()
+    {
+        if (gameController.shieldScore >= shieldRegeneration)
+        {
+            shield++;
+            gameController.shieldScore = 0;
+            shieldRegeneration += 20;
+        }
+        shieldText.text = "Schildstärke bei " + shield + "0%";
+    }
+
 }
