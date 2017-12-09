@@ -1068,6 +1068,8 @@ MonoBehaviour:
   shot: {fileID: 1792939062140920, guid: c5074578f4e8a8b49b3aec312b111d36, type: 2}
   shotSpawn: {fileID: 1702205724}
   fireRate: 0.5
+  burstRate: 5
+  burstCount: 0
 --- !u!82 &1753166130
 AudioSource:
   m_ObjectHideFlags: 0

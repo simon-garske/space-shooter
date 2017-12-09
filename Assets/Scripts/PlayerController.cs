@@ -16,18 +16,33 @@ public class PlayerController : MonoBehaviour
 	public GameObject shot;
 	public Transform shotSpawn;
     public float fireRate;
+    public float burstRate;
+    public int burstCount;
+    private bool burst;
 
 	private float nextFire;
+    private float nextBurst;
 
 	void Update ()
 	{
-		if (Input.GetButton("Fire1") && Time.time > nextFire)
+		if (Input.GetKeyDown("space") && Time.time > nextFire)
 		{
 			nextFire = Time.time + fireRate;
 			Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
 			GetComponent<AudioSource>().Play ();
 		}
-	}
+
+        if (Input.GetKeyDown("q") && Time.time > nextBurst)
+        {
+            nextBurst = Time.time + burstRate;
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            Instantiate(shot, shotSpawn.position, shotSpawn.rotation);
+            GetComponent<AudioSource>().Play();
+        }
+    }
 
 	void FixedUpdate ()
 	{
@@ -46,5 +61,4 @@ public class PlayerController : MonoBehaviour
 
 		GetComponent<Rigidbody>().rotation = Quaternion.Euler (0.0f, 0.0f, GetComponent<Rigidbody>().velocity.x * -tilt);
 	}
-
 }
